@@ -442,7 +442,6 @@ __metadata:
     axios: ^1.4.0
     cors: ^2.8.5
     dotenv: ^8.2.0
-    express: ^4.18.2
     json-server: ^0.17.3
     morgan: ^1.10.0
     nodemon: ^2.0.22
@@ -1011,7 +1010,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express@npm:^4.17.1, express@npm:^4.18.2":
+"express@npm:^4.17.1":
   version: 4.18.2
   resolution: "express@npm:4.18.2"
   dependencies:

@@ -4,12 +4,15 @@ import morgan from "morgan";
 import passport from "passport";
 // @ts-ignore
 import dotenv from "dotenv";
-import path from "path";
+import path from "path"; 
+import { dbConnection } from "./config/database";
+
+
+
 
 dotenv.config({
   path: path.resolve(".env"),
 });
-
 import { AppRoutes } from "@config";
 import {
   beforeCheckClientMiddleware,
@@ -18,7 +21,10 @@ import {
 import "./utils/passaport-strategy";
 
 const port = process.env.PORT || 7200;
-const app = express();
+const app = express(); 
+
+dbConnection();
+
 
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms")
@@ -27,6 +33,10 @@ app.use(cors());
 app.use(beforeCheckClientMiddleware);
 app.use(AppRoutes);
 app.use(errorHandlingMiddleware);
+ 
+ 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
 });
+
+
