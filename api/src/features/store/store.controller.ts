@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { StatusCode } from "@utils";
 import { StoreService } from "@features/store";
 
-export interface ProductRequest extends Request {
+export interface StoreRequest extends Request {
   user: { user_id: number };
 }
 

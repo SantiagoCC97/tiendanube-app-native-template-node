@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { StatusCode } from "@utils";
 import { InstallAppService, AuthService } from "@features/auth";
 import { StoreService } from "@features/store";
-import dataStoreController from "src/controllers/store/dataStoreController";
+
 
 
 class AuthenticationController {
@@ -16,14 +16,18 @@ class AuthenticationController {
         req.query.code as string
       );
       const dataStore = await StoreService.getDataStore(data.user_id as number)
+
       if (dataStore) {
-        const saveReg = dataStoreController.createStore(dataStore, res)
+        const saveReg = await StoreService.createStore(dataStore)
         console.info("Saving data store", saveReg)
       }
 
-      return res.status(StatusCode.OK).json(data);
+      // return res.status(StatusCode.OK).json(data);
+      return res.redirect("https://testultimate.mitiendanube.com/admin/v2/apps/test-application");
 
     } catch (e) {
+      console.log('error on install store', e);
+
       return next(e);
     }
   }

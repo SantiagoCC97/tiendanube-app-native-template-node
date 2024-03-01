@@ -25,7 +25,7 @@ class ProductController {
     res: Response,
     next: NextFunction
   ): Promise<Response | void> {
-    try {
+    try {  
       const data = await ProductService.findAllCount(+req.user.user_id);
       return res.status(StatusCode.OK).json(data);
     } catch (e) {
@@ -52,6 +52,7 @@ class ProductController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
+      
       const data = await ProductService.delete(
         +req.user.user_id,
         req.params.id as string
