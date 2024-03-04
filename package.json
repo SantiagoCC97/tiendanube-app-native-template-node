@@ -20,9 +20,5 @@
   "engines": {
     "node": ">=16.14"
   },
-  "packageManager": "yarn@3.2.2",
-  "dependencies": {
-    "@nimbus-ds/icons": "^1.5.0",
-    "react-icons": "^5.0.1"
-  }
+  "packageManager": "yarn@3.2.2"
 }

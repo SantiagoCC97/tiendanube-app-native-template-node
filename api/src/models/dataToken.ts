@@ -8,12 +8,10 @@ const dataTokenSchema = new mongoose.Schema({
     timestamps: true // Agrega campos de fecha automáticamente (createdAt, updatedAt)
 });
 
- 
-
 
 //Interface user basada en el esquema
 export type IdataToken = InferSchemaType<typeof dataTokenSchema>;
 //Modelo user basado en el esquema  
 export const dataToken = mongoose.model("tokens", dataTokenSchema);
-dataToken.collection.createIndex( {name:1}, {unique:true});
+dataToken.collection.createIndex( {token:1}, {unique:true});
 

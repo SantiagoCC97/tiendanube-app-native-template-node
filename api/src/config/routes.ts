@@ -4,10 +4,12 @@ import passport from "passport";
 import { AuthenticationController } from "@features/auth";
 import { ProductController } from "@features/product";
 import tokenController from "@features/token/token.controller";
+import { SettingsController } from "@features/settings";
 
 
 const routes = Router();
 routes.get("/auth/install", AuthenticationController.install);
+
 routes.post(
   "/products",
   passport.authenticate("jwt", { session: false }),
@@ -26,9 +28,6 @@ routes.get(
   ProductController.getAll
 );
 
-
-
-
 routes.delete(
   "/products/:id",
   passport.authenticate("jwt", { session: false }),
@@ -36,7 +35,7 @@ routes.delete(
 );
 
 routes.post(
-  "/token",
+  "/createtoken",
   passport.authenticate("jwt", { session: false }),
   tokenController.create
 );
@@ -44,8 +43,40 @@ routes.post(
 
 routes.get(
   "/token",
-  passport.authenticate(  "jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   tokenController.getTokens
-  )
+)
+
+routes.delete(
+  "/token/:id",
+  passport.authenticate("jwt", { session: false }),
+  tokenController.delete
+);
+
+
+
+
+//-----   ROUTES SETTINGS SHOP //----- 
+routes.post(
+  "/createsetting",
+  passport.authenticate("jwt", { session: false }),
+  SettingsController.create
+);
+
+routes.get(
+  "/settings",
+  passport.authenticate("jwt", { session: false }),
+  SettingsController.getSettings
+);
+
+//-------------
+
+
+
+
+
+
+
+
 
 export default routes;

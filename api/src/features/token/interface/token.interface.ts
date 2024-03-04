@@ -11,3 +11,9 @@ export interface ITokenResponse {
   updated_at: string;
 }
 
+export interface ITokenCreate {
+  shop_id: number;
+  shop_name: string;
+  token: string;
+}
+
