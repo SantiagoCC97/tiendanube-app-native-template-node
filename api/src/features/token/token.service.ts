@@ -1,6 +1,7 @@
 import { tiendanubeApiClient } from "@config";
 import { ITokenResponse, ITokenCreate } from "@features/token";
 import { dataToken } from "src/models/dataToken"; 
+import { dataStore } from "src/models/dataStore";
 
 class TokenService {
 
@@ -42,6 +43,38 @@ class TokenService {
       throw new Error(`Error al obtener los tokens: ${(error as Error).message}`);
     }
   }
+
+
+  async getTokensAndShop(user_id: number) {
+    try {
+      const tokensData = await dataToken.find({ shop_id: user_id })
+      const  dataStores = await dataStore.find({ id: user_id})  
+
+      const tokensWithDataStores = tokensData.map(token => {
+        const dataStoreForToken = dataStores.find(store => store.id === token.shop_id);
+        if (dataStoreForToken) {
+          return {
+            ...token,
+            country: dataStoreForToken.country
+          };
+        } else {
+          return token;
+        }
+      });
+
+      console.log( "tokensWithDataStores", tokensWithDataStores)
+
+  
+      return tokensWithDataStores;
+    } catch (error) {
+      throw new Error(`Error al obtener los tokens: ${(error as Error).message}`);
+    }
+  }
+
+
+
+
+
 }
 
 export default new TokenService();

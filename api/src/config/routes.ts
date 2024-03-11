@@ -42,10 +42,17 @@ routes.post(
 
 
 routes.get(
+  "/tokenandshop",
+  passport.authenticate("jwt", { session: false }),
+  tokenController.getTokensAndShop
+);
+
+
+routes.get(
   "/token",
   passport.authenticate("jwt", { session: false }),
   tokenController.getTokens
-)
+);
 
 routes.delete(
   "/token/:id",
