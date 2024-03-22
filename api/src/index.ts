@@ -19,13 +19,14 @@ import {
   errorHandlingMiddleware,
 } from "@middlewares";
 import "./utils/passaport-strategy";
+import { bodyParser } from "json-server";
 
 const port = process.env.PORT || 7200;
 const app = express(); 
 
 dbConnection();
 
-
+app.use(bodyParser)
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms")
 );
