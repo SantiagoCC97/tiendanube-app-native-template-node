@@ -29,7 +29,7 @@ class TokenController {
 
   async getTokens(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
-      const data = await TokenService.getTokens(+req.user.user_id);
+      const data = await TokenService.getTokens(req.user[0].user_id);
       return res.status(StatusCode.OK).json(data);
     } catch (e) {
       next(e);
@@ -39,7 +39,7 @@ class TokenController {
 
   async getTokensAndShop(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
-      const data = await TokenService.getTokensAndShop(+req.user.user_id);
+      const data = await TokenService.getTokensAndShop(req.user[0].user_id);
       return res.status(StatusCode.OK).json(data);
     } catch (e) {
       next(e);

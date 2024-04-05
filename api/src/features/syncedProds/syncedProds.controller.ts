@@ -9,22 +9,15 @@ class syncedProdsController {
 
   async create(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
-      const bodyData = req.body;
-        
+      const bodyData = req.body; 
       //  se crea primero en TiendaNube producto, para utilizar su ID de producto generado en el almacenamiento de producto en BD.
-      const save = await syncedProdsService.createToTiendanube(bodyData, +req.user.user_id);
+      const save = await syncedProdsService.createToTiendanube(bodyData, req.user[0].user_id);
       // se almacena producto en Base de datos.
       
       if(save){
         console.log("sisas");
         
       }
-
-
-
-
-
-
 
       return res.status(StatusCode.CREATED).json(response);
     } catch (e) {

@@ -4,7 +4,7 @@ import { dataStore } from "src/models/dataStore";
 
 class StoreService {
   async getDataStore(user_id: number, access_token: string): Promise<IStoreResponse> {
- 
+
 
     const data: any = await tiendanubeApiClient.get(
       `${user_id}/store`,
@@ -19,7 +19,7 @@ class StoreService {
     }
   }
 
-  async getDataStorealt(user_id: number ): Promise<IStoreResponse> {
+  async getDataStorealt(user_id: number): Promise<IStoreResponse> {
     const data: any = await tiendanubeApiClient.get(
       `${user_id}/store`,
     );
@@ -34,7 +34,7 @@ class StoreService {
 
 
   async createStore(data: IStoreResponse) {
-    
+
     try {
       const dataS = new dataStore(data)
       const savedStatus = await dataS.save();
@@ -46,24 +46,15 @@ class StoreService {
 
       if (store) {
         // Si store contiene datos, agrega las propiedades 'country' y 'name' al objeto 'data'
-        data.country = store.country;
-        data.name = store.name;
-
-        dataStore.updateOne({ name: 'John' }, { $set: { age: 30 } }, (err, updateResult) => {
-          if (err) {
-              console.error(err);
-          } else {
-              console.log('Document updated:', updateResult);
-          }
-      });
-
-        
+        const filter = { user_id: data.user_id };
+        const update = { name: store.name, country: store.country };
+        const  doc = await dataStore.findOneAndUpdate(filter, update);
+        return { status: doc }
       }
 
-
-      console.log("STORE", store)
-
       return { status: savedStatus }
+
+   
     } catch (error) {
       throw new Error(`Error al guardar los datos de la tienda: ${(error as Error).message}`);
     }

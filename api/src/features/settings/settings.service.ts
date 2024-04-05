@@ -38,7 +38,6 @@ class SettingsService {
   async getSettings(user_id: number) {
     try { 
       const tokensData = await setting.find({ shop_id: user_id })
-      console.log(tokensData)
       return [...tokensData]
     } catch (error) {
       throw new Error(`Error al obtener los tokens: ${(error as Error).message}`);

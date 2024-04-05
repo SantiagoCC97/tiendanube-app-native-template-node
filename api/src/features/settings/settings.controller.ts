@@ -29,7 +29,6 @@ class SettingsController {
   async getSettings(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try { 
       const data = await SettingService.getSettings(+req.user[0].user_id);
-      console.log("data", data);
       return res.status(StatusCode.OK).json(data);
     } catch (e) {
       next(e);
