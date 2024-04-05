@@ -4,11 +4,21 @@ import { syncedProd } from "src/models/syncedProduct";
 
 class syncedProdsService {
 
-  async createToken() {
+
+  async createToTiendanube(databySync: any, user_id: number ): Promise<IProductResponse> {
+
+    // const dataProduct: IProductRequest = generateProductMock();
+    const dataProduct = databySync
+    const data: IProductResponse = await tiendanubeApiClient.post(`${user_id}/products`,dataProduct);
+      return {
+        id: "1", 
+     } as IProductResponse;
+
+  }
+
+  async create(data: any) {
     try {
-      // const dataS = new dataToken(data)
-      //  const savedStatus = await dataS.save();
-      return console.log(" JSON")
+      return console.log(" JSON",data)
     } catch (error) {
       throw new Error(`Error al guardar el token: ${(error as Error).message}`);
     }
@@ -18,36 +28,8 @@ class syncedProdsService {
     return (await tiendanubeApiClient.get(
       `${user_id}/products`
     )) as IProductResponse[];
-  }
+  } 
 
-  // async delete(tokenId: string) {
-  //   try {
-  //     // Utiliza el método de Mongoose para eliminar el token por su _id
-  //     const deletedToken = await dataToken.findByIdAndDelete(tokenId);
-
-  //     if (!deletedToken) {
-  //       throw new Error("El token especificado no fue encontrado");
-  //     }
-
-  //     console.log(`Token eliminado: ${deletedToken}`);
-  //     return deletedToken;
-  //   } catch (error) {
-  //     throw new Error(`Error al eliminar el token: ${(error as Error).message}`);
-  //   }
-  // }
-
-
-
-
-  // async getTokens(user_id: number) {
-  //   try {
-  //     const tokensData = await dataToken.find({ shop_id: user_id })
-  //     console.log(tokensData)
-  //     return [...tokensData]
-  //   } catch (error) {
-  //     throw new Error(`Error al obtener los tokens: ${(error as Error).message}`);
-  //   }
-  // }
 }
 
 export default new syncedProdsService();

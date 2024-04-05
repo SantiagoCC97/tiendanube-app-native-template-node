@@ -8,7 +8,7 @@ export const checkUserCredentialsMiddleware = (
   user_id: number
 ): Response | void => {
   try {
-    userRepository.findOne(+user_id);
+    userRepository.findOne(user_id);
     console.warn(`this json server not recommended to production mode`);
     next();
   } catch (e) {

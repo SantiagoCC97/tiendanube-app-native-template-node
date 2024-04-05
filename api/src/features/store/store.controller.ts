@@ -14,7 +14,7 @@ class StoreController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const data = await StoreService.getDataStore(+req.user.user_id);
+      const data = await StoreService.getDataStorealt(+req.user.user_id);
       return res.status(StatusCode.CREATED).json(data);
     } catch (e) {
       next(e);

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { userRepository } from "@repository";
 import { HttpErrorException } from "@utils";
+import { dataStore } from "src/models/dataStore";
 
 export const tiendanubeApiClient = axios.create({
   baseURL: process.env.TIENDANUBE_API_URL,
@@ -11,12 +12,14 @@ export const tiendanubeApiClient = axios.create({
 });
 
 tiendanubeApiClient.interceptors.request.use(
-  (config) => {
+ async (config) => {
     // Do something before request is sent
-    const { access_token } = userRepository.findOne(
-      +config.url?.split("/")[0]!!
-    );
-    config.headers["Authentication"] = `bearer ${access_token}`;
+     const data =  await userRepository.findOne(
+      +config.url?.split("/")[0]!! 
+     );
+
+      config.headers["Authentication"] = `bearer ${data[0].access_token}`;
+
     return config;
   },
   function (error) {

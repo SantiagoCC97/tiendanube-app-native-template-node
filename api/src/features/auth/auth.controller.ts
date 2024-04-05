@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCode } from "@utils";
 import { InstallAppService, AuthService } from "@features/auth";
-import { StoreService } from "@features/store";
+
 
 
 
@@ -12,16 +12,9 @@ class AuthenticationController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const data = await InstallAppService.install(
-        req.query.code as string
-      );
-      const dataStore = await StoreService.getDataStore(data.user_id as number)
 
-      if (dataStore) {
-        const saveReg = await StoreService.createStore(dataStore)
-        console.info("Saving data store", saveReg)
-      }
-
+      const data = await InstallAppService.install( req.query.code as string );
+      
       // return res.status(StatusCode.OK).json(data);
       return res.redirect("https://testultimate.mitiendanube.com/admin/v2/apps/test-application");
 

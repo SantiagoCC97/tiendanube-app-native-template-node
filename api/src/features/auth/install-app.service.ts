@@ -2,6 +2,7 @@ import { tiendanubeAuthClient } from "@config";
 import { BadRequestException } from "@utils";
 import { userRepository } from "@repository";
 import { TiendanubeAuthRequest, TiendanubeAuthInterface } from "@features/auth";
+import { StoreService } from "@features/store";
 
 class InstallAppService {
   public async install(code: string): Promise<TiendanubeAuthInterface> {
@@ -24,11 +25,16 @@ class InstallAppService {
         authenticateResponse.error as string,
         authenticateResponse.error_description
       );
-    }
+    } 
+ 
+      const saveFirstReg = await StoreService.createStore(authenticateResponse)
+
+      console.info("Saving data store", saveFirstReg)
+         
 
     // Insert response of Authentication API at db.json file
-    userRepository.save(authenticateResponse);
-
+     userRepository.save(authenticateResponse);
+ 
     return authenticateResponse;
   }
 

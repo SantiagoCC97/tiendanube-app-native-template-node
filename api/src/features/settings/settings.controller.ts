@@ -10,10 +10,9 @@ export interface SettingsRequest extends Request {
 class SettingsController {
 
   async create(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
-    try {
- 
+    try { 
       const data: ISettingsCreate = {
-        shop_id: req.user.user_id, 
+        shop_id: req.user[0].user_id, 
         autosync_orders: req.query.autosync_orders as string,
         ifProdExist: req.query.ifProdExist as string,
         cleanNoteOrder: req.query.cleanNoteOrder as string,
@@ -28,8 +27,8 @@ class SettingsController {
   }
 
   async getSettings(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
-    try {
-      const data = await SettingService.getSettings(+req.user.user_id);
+    try { 
+      const data = await SettingService.getSettings(+req.user[0].user_id);
       console.log("data", data);
       return res.status(StatusCode.OK).json(data);
     } catch (e) {

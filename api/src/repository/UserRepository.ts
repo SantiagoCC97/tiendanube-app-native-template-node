@@ -2,8 +2,10 @@ import jsonServer from "json-server";
 import path from "path";
 import low from "lowdb";
 import FileSync from "lowdb/adapters/FileSync";
-import { TiendanubeAuthInterface } from "@features/auth";
+import { TiendanubeAuthInterface, dataStoreInterface } from "@features/auth";
 import { HttpErrorException } from "@utils";
+import { dataStore } from "src/models/dataStore";
+import { Int32 } from "mongodb";
 
 /**
  * this repository is temporary, please use real database to production mode
@@ -29,22 +31,26 @@ class UserRepository {
     this.createOrUpdate(credential);
   }
 
-  findOne(user_id: number) {
-    const credentials = database.get("credentials").value();
-    const store = this.findValueFromProperty<TiendanubeAuthInterface, number>(
-      "user_id",
-      credentials,
-      user_id
-    );
+  async findOne(user_id: number) {
 
-    if (!store) {
+    const data = await dataStore.findOne({'user_id':parseInt(user_id.toString())} ); 
+    const credentials = [
+      {
+        "access_token": data?.access_token,
+        "token_type": "bearer",
+        "scope": data?.scope,
+        "user_id": data?.user_id
+      } 
+    ]
+
+    if (!credentials) {
       throw new HttpErrorException(
         "Read our documentation on how to authenticate your app"
       ).setStatusCode(404);
     }
-
-    return store;
+    return credentials;
   }
+
 
   findFirst(): TiendanubeAuthInterface {
     return database.get("credentials").value()?.[0];

@@ -4,10 +4,12 @@
  
  
 export interface IStoreResponse  {
-  id:                    number;
-  name:                  Description; 
-  email:                 string; 
-  country:               string; 
+  user_id?:               number;
+  name?:                  Description; 
+  email?:                 string; 
+  country?:               string; 
+  access_token?:          string;
+  scope?:                 string;
 }
 
 

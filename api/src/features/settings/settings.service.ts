@@ -36,7 +36,7 @@ class SettingsService {
 
 
   async getSettings(user_id: number) {
-    try {
+    try { 
       const tokensData = await setting.find({ shop_id: user_id })
       console.log(tokensData)
       return [...tokensData]
