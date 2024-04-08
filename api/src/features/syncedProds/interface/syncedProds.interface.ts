@@ -20,7 +20,8 @@ export interface ISyncedprod {
   published:       boolean;
   free_shipping:   boolean;
   updated_at:      string;
-  variants:        Variant[];
+  variants: any[];
+ // variants:        Variant[];
 }
 
 export interface Attribute {
@@ -62,7 +63,7 @@ export interface ITiendaNubeProd {
   name:              Description;
   description:       Description;
   handle:            Description;
-  attributes:        any[];
+  attributes:        any;
   published:         boolean;
   free_shipping:     boolean;
   requires_shipping: boolean;
