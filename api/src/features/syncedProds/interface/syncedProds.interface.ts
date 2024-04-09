@@ -53,6 +53,20 @@ export interface Image {
   product_id: number;
 }
 
+export interface ISyncedProdDb {
+  shop_id: number;
+  cms_id: number;
+  dropi_id: string;
+}
+
+
+export interface ISyncedVariantDb {
+  shop_id: number;
+  cms_var_id: number;
+  dropi_var_id: number;
+  cms_prod_id: number;
+  dropi_prod_id: number;
+}
  
 
  
@@ -63,6 +77,7 @@ export interface ITiendaNubeProd {
   name:              Description;
   description:       Description;
   handle:            Description;
+  stock_management: boolean;
   attributes:        any;
   published:         boolean;
   free_shipping:     boolean;
@@ -78,6 +93,9 @@ export interface ITiendaNubeProd {
   tags:              string;
   images:            any[];
   categories:        any[];
+  stock: any;
+  price: any;
+  promotional_price: any;
 }
 
 export interface Description {
