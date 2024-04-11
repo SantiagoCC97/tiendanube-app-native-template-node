@@ -5,6 +5,7 @@ import { AuthenticationController } from "@features/auth";
 import { syncedProdsController } from "@features/syncedProds";
 import tokenController from "@features/token/token.controller";
 import { SettingsController } from "@features/settings";
+import { ProductController } from "@features/product";
 
 
 const routes = Router();
@@ -33,11 +34,11 @@ routes.get("/auth/install", AuthenticationController.install);
 //   ProductController.getAll
 // );
 
-// routes.delete(
-//   "/products/:id",
-//   passport.authenticate("jwt", { session: false }),
-//   ProductController.delete
-// );
+routes.delete(
+  "/products/:id",
+  passport.authenticate("jwt", { session: false }),
+  syncedProdsController.delete
+);
 
 routes.post(
   "/createtoken",
@@ -57,10 +58,21 @@ routes.post(
   syncedProdsController.create
 );
 
-routes.get (
-  "/getProduct", passport.authenticate("jwt", { session: false}),
-    syncedProdsController.getAll
+routes.get(
+  "/getProduct", passport.authenticate("jwt", { session: false }),
+  syncedProdsController.getAll
 )
+
+routes.get(
+  "/allsyncedproducts", passport.authenticate("jwt", { session: false }), 
+  syncedProdsController.getAllSyncedProds
+  )
+
+
+  routes.delete(
+    "/syncedprod/:id", passport.authenticate("jwt", {session: false}),
+    syncedProdsController.deleteSyncedProd
+  )
 
 
 

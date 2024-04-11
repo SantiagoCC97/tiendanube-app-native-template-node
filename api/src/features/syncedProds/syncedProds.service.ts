@@ -4,13 +4,14 @@ import { syncedProd } from "src/models/syncedProduct";
 import { variantProd } from "src/models/variantProduct";
 
 import { ISyncedProdDb, ISyncedVariantDb, ITiendaNubeProd } from ".";
+import { Console } from "console";
 
 
 class syncedProdsService {
 
 
   async createToTiendanube(databySync: any, user_id: number): Promise<IProductResponse> {
-     
+
 
     const makeAttributes: any = []
     const makeImages: any = []
@@ -41,10 +42,10 @@ class syncedProdsService {
 
       databySync.variations.forEach((val: any) => {
         let arrayTemp: any = []   // creo un array temporal, que utilizaré para insertar los datos necesarios para la creación de los atributos de la variant
-
         val.attribute_values.forEach((att: any) => {
+          let attribute = att.attribute_name.toUpperCase()
           let attInsertable = {
-            es: `${att.attribute_name} ${att.value}`
+            es: `${attribute} ${att.value}`
           }
           arrayTemp.push(attInsertable)
         })
@@ -82,6 +83,10 @@ class syncedProdsService {
 
 
 
+    console.log("dataforapi", dataforapi);
+
+
+
 
     try {
       const data: IProductResponse = await tiendanubeApiClient.post(`${user_id}/products`, dataforapi);
@@ -89,7 +94,9 @@ class syncedProdsService {
         const saveProdOnDb = {
           shop_id: user_id,
           cms_id: data.id,
-          dropi_id: databySync.id
+          dropi_id: databySync.id,
+          img: makeImages[0] ? makeImages[0].src : '',
+          name: databySync.name
         } as ISyncedProdDb
 
         const dataS = new syncedProd(saveProdOnDb)
@@ -114,7 +121,7 @@ class syncedProdsService {
             }
           });
         }
-        console.log("savedStatus", savedStatus._id)
+        console.log("savedStatus", data)
       }
     } catch (error) {
       console.error("Error al llamar al servicio:", error);
@@ -138,6 +145,36 @@ class syncedProdsService {
     return (await tiendanubeApiClient.get(
       `${user_id}/products`
     )) as IProductResponse[];
+  }
+
+  async findAllSyncedProds(user_id: number) {
+    try {
+      const prodDbData = await syncedProd.find({ shop_id: user_id })
+      return (prodDbData)
+
+    } catch (error) {
+      return (error)
+    }
+  }
+
+
+  async delete(user_id: number, prod_id: number) {
+    try { 
+      const deletedToken = await syncedProd.findOneAndDelete({ shop_id: user_id, cms_id: prod_id });
+
+      if (!deletedToken) {
+        throw new Error("El token especificado no fue encontrado");
+      }
+
+      console.log(`Token eliminado: ${deletedToken}`);
+      return deletedToken;
+    } catch (error) {
+      throw new Error(`Error al eliminar el token: ${(error as Error).message}`);
+    }
+  }
+
+  async deleteontiendanube(user_id: number, productId: string): Promise<any> {
+    return await tiendanubeApiClient.delete(`${user_id}/products/${productId}`);
   }
 
 }

@@ -57,10 +57,7 @@ class TokenService {
           return token;
         }
       });
-
-      console.log("tokensWithDataStores", tokensWithDataStores)
-
-
+ 
       return tokensWithDataStores;
     } catch (error) {
       throw new Error(`Error al obtener los tokens: ${(error as Error).message}`);

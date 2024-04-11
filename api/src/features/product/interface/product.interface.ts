@@ -22,6 +22,7 @@ export interface IProductResponse  {
   images:            Image[];
   categories:        any[];
 }
+ 
 
 export interface Description {
   es: string;

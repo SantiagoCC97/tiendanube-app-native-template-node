@@ -1,24 +1,11 @@
-import { generateProductMock } from "@features/product/__mock__/product.mock";
+ 
 import { tiendanubeApiClient } from "@config";
-import { IProductRequest, IProductResponse } from "@features/product";
+import { IProductResponse } from "@features/product";
 
 class ProductService {
-  async create(user_id: number): Promise<IProductResponse> {
-    const randomProduct: IProductRequest = generateProductMock();
-    const data: IProductResponse = await tiendanubeApiClient.post(
-      `${user_id}/products`,
-      randomProduct
-    );
+  
 
-    return {
-      id: data.id,
-      ...randomProduct,
-    } as IProductResponse;
-  }
-
-  async delete(user_id: number, productId: string): Promise<any> {
-    return await tiendanubeApiClient.delete(`${user_id}/products/${productId}`);
-  }
+  
 
   async findAll(user_id: number): Promise<IProductResponse[]> {
     return this.findAllFromApi(user_id);

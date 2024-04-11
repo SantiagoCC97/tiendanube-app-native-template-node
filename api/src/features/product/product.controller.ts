@@ -7,18 +7,7 @@ export interface ProductRequest extends Request {
 }
 
 class ProductController {
-  async create(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<Response | void> {
-    try {
-      const data = await ProductService.create(+req.user.user_id);
-      return res.status(StatusCode.CREATED).json(data);
-    } catch (e) {
-      next(e);
-    }
-  }
+  
 
   async getTotal(
     req: Request,
@@ -46,22 +35,9 @@ class ProductController {
     }
   }
 
-  async delete(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<Response | void> {
-    try {
-      
-      const data = await ProductService.delete(
-        +req.user.user_id,
-        req.params.id as string
-      );
-      return res.status(StatusCode.OK).json(data);
-    } catch (e) {
-      next(e);
-    }
-  }
+  
+
+
 }
 
 export default new ProductController();

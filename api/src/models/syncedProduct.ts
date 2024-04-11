@@ -4,6 +4,8 @@ const syncedProductSchema = new mongoose.Schema({
     shop_id:{type: mongoose.Schema.Types.Mixed},
     cms_id:{type: mongoose.Schema.Types.Mixed},
     dropi_id:{type: mongoose.Schema.Types.Mixed},    
+    img: {type: mongoose.Schema.Types.Mixed},
+    name: {type: mongoose.Schema.Types.Mixed}
 }, {
     timestamps: true // Agrega campos de fecha automáticamente (createdAt, updatedAt)
 });
