@@ -76,7 +76,7 @@ class syncedProdsController {
     } catch (e) {
       next(e);
     }
-  }
+  }  
 
 
 

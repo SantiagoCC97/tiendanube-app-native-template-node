@@ -15,7 +15,7 @@ class TokenController {
 
 
       const data: ITokenCreate = {
-        shop_id: req.user.user_id,
+        shop_id: req.user[0].user_id,
         token: req.query.token as string,
         shop_name: req.query.name as string,
       }

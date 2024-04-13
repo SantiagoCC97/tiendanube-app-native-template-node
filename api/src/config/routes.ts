@@ -105,6 +105,8 @@ routes.get(
   SettingsController.getSettings
 );
 
+routes.get("/testinglink", ()=>{console.log("Holi");  })
+
 
 //-------------
 
